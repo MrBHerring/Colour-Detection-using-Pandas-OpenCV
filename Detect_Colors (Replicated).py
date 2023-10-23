@@ -12,13 +12,13 @@ import argparse
 
 
 
-
+#Create an argument parser to take image path from command line
 ap = argparse.ArgumentParser()
 ap.add_argument('-i', '--image', required=True, help="Image Path")
 args = vars(ap.parse_args())
 img_path = args['image']
 
-#Reading image with opencv
+#Read the image with opencv
 img = cv2.imread(img_path)
 
 #declaring global variables (are used later on)
@@ -30,7 +30,7 @@ index=["color","color_name","hex","R","G","B"]
 csv = pd.read_csv('colors.csv',names=index,header=None)
 
 
-
+# Calculate minimum distance from all colors and get the most matching color
 def getColorName(R,G,B):
     minimum = 10000
     for i in range(len(csv)):
@@ -40,7 +40,7 @@ def getColorName(R,G,B):
             cname = csv.loc[i,"color_name"]
     return cname
 
-
+# Get x,y coordinates of where user double clicks
 def draw_function(event, x,y,flags,param):
     if event == cv2.EVENT_LBUTTONDBLCLK:
         global b,g,r,xpos,ypos,clicked
